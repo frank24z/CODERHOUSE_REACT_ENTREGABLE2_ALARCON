@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import CrearHotel from './components/CrearHotel';
 import Navbar from './components/Navbar';
+import Home from './components/Hotel'; // Si tienes un componente Home
 
 function App() {
   const [usuario, setUsuario] = useState(() => localStorage.getItem('usuario') || null);
@@ -27,23 +29,30 @@ function App() {
     setNombreHotel(hotel);
   };
 
-  // El logout solo reinicia la sesión, pero mantiene los datos en el localStorage
   const handleLogout = () => {
-    setUsuario(null);  // Cierra la sesión actual
+    setUsuario(null);
+    setNombreHotel('');
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('nombreHotel');
   };
 
   return (
-    <div>
-      {!usuario ? (
-        <Login onLogin={manejarLogin} usuarioGuardado={localStorage.getItem('usuario')} />
-      ) : !nombreHotel ? (
-        <CrearHotel onCrearHotel={manejarCrearHotel} />
-      ) : (
-        <>
-          <Navbar usuario={usuario} nombreHotel={nombreHotel} onLogout={handleLogout} />
-        </>
-      )}
-    </div>
+    <Router>
+      <Navbar usuario={usuario} nombreHotel={nombreHotel} onLogout={handleLogout} />
+      <Routes>
+        {!usuario ? (
+          <Route path="*" element={<Navigate to="/login" />} />
+        ) : !nombreHotel ? (
+          <Route path="*" element={<Navigate to="/crear-hotel" />} />
+        ) : (
+          <Route path="*" element={<Navigate to="/home" />} />
+        )}
+
+        <Route path="/login" element={<Login onLogin={manejarLogin} />} />
+        <Route path="/crear-hotel" element={<CrearHotel onCrearHotel={manejarCrearHotel} />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </Router>
   );
 }
 

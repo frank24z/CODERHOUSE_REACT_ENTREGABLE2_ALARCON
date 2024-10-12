@@ -1,3 +1,4 @@
+/* Estilos generales */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -5,6 +6,7 @@ body {
   background-color: #f0f0f0;
 }
 
+/* Contenedor de login y creación de hotel */
 .login-container, .crearhotel-container {
   width: 300px;
   margin: 100px auto;
@@ -15,6 +17,7 @@ body {
   text-align: center;
 }
 
+/* Input y botones */
 input {
   width: calc(100% - 20px);
   padding: 10px;
@@ -37,6 +40,7 @@ button:hover {
   background-color: #45a049;
 }
 
+/* Barra de navegación */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -68,7 +72,78 @@ button:hover {
   background-color: #c0392b;
 }
 
+/* Contenido principal */
 .content {
   text-align: center;
   margin-top: 50px;
+}
+
+/* Estilos adicionales para habitaciones y huéspedes */
+.hotel-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+/* Sidebar para crear habitaciones y huéspedes */
+.sidebar-container {
+  width: 300px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Formulario de inputs dentro del sidebar */
+input, select, button {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Mostrar huéspedes creados debajo del formulario en el sidebar */
+.huesped-card {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.huesped-card:hover {
+  background-color: #e0e0e0;
+}
+
+/* Tarjetas de habitaciones a lo largo de la pantalla */
+.habitaciones-container {
+  width: 70%; /* Ajuste del ancho para que ocupe más espacio */
+}
+
+.habitacion-card {
+  background-color: #f9f9f9;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  width: 100%; /* A lo largo de la pantalla */
+}
+
+/* Estilo de error en los campos de input */
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin: 5px 0;
 }
