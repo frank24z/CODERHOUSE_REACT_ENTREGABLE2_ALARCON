@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importamos useNavigate
+import { useNavigate } from 'react-router-dom';
 
 function Login({ onLogin, usuarioGuardado }) {
   const [nombre, setNombre] = useState(usuarioGuardado || '');
   const [error, setError] = useState('');
-  const navigate = useNavigate(); // Hook para redirección programática
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (usuarioGuardado) {
-      setNombre(usuarioGuardado); // Cargar el usuario guardado si existe
+      setNombre(usuarioGuardado);
     }
   }, [usuarioGuardado]);
 
@@ -18,9 +18,9 @@ function Login({ onLogin, usuarioGuardado }) {
       return;
     }
     setError('');
-    sessionStorage.setItem('usuario', nombre); // Guardar en sessionStorage
-    onLogin(nombre); // Llamar al login de App.jsx
-    navigate('/home'); // Redirigir al Home
+    sessionStorage.setItem('usuario', nombre);
+    onLogin(nombre); 
+    navigate('/home');
   };
 
   return (
@@ -31,10 +31,10 @@ function Login({ onLogin, usuarioGuardado }) {
         placeholder="Ingrese su nombre"
         value={nombre}
         onChange={(e) => setNombre(e.target.value)}
-        disabled={!!usuarioGuardado} // Desactivar si ya hay un usuario guardado
+        disabled={!!usuarioGuardado}
       />
       {error && <div className="error-message">{error}</div>}
-      <button onClick={manejarLogin}>Ingresar</button> {/* Botón siempre funcional */}
+      <button onClick={manejarLogin}>Ingresar</button> 
     </div>
   );
 }

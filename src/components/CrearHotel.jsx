@@ -10,7 +10,7 @@ function CrearHotel({ onCrearHotel }) {
       return;
     }
     setError('');
-    onCrearHotel(nombreHotel); // Pasamos el nombre del hotel al padre (App)
+    onCrearHotel(nombreHotel);
   };
 
   return (

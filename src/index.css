@@ -1,4 +1,3 @@
-/* Estilo general del body */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -6,7 +5,6 @@ body {
   background-color: #f0f0f0;
 }
 
-/* Contenedor para las tarjetas de Login y Crear Hotel */
 .card-container {
   width: 400px;
   margin: 100px auto;
@@ -17,7 +15,6 @@ body {
   text-align: center;
 }
 
-/* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -63,7 +60,6 @@ body {
   background-color: #ff1a1a;
 }
 
-/* Contenedor del Home */
 .home-container {
   display: flex;
   justify-content: space-between;
@@ -74,7 +70,6 @@ body {
   box-sizing: border-box;
 }
 
-/* Sidebar */
 .sidebar-container {
   width: 30%;
   background-color: white;
@@ -84,7 +79,6 @@ body {
   overflow-y: auto;
 }
 
-/* Contenedor de Habitaciones */
 .habitaciones-container {
   width: 65%;
   margin-left: 20px;
@@ -94,7 +88,6 @@ body {
   overflow-y: auto;
 }
 
-/* Contenedor de Huéspedes */
 .huespedes-container {
   width: 30%;
   padding: 20px;
@@ -104,7 +97,6 @@ body {
   overflow-y: auto;
 }
 
-/* Tarjetas de habitaciones y huéspedes */
 .habitacion-card, .huesped-card {
   background-color: #f9f9f9;
   padding: 15px;
@@ -113,7 +105,6 @@ body {
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Tarjeta de Habitación */
 .habitacion-card {
   display: flex;
   align-items: center;
@@ -122,7 +113,6 @@ body {
   padding: 15px;
 }
 
-/* Imagen de estado dentro de la tarjeta */
 .estado-imagen {
   width: 50px;
   height: 50px;
@@ -130,7 +120,6 @@ body {
   border-radius: 8px;
 }
 
-/* Información de la habitación */
 .info-habitacion {
   flex: 1;
   display: flex;
@@ -138,7 +127,6 @@ body {
   gap: 5px;
 }
 
-/* Formulario Inputs y Selects */
 input, select {
   width: calc(100% - 20px);
   padding: 10px;
@@ -147,7 +135,7 @@ input, select {
   border-radius: 4px;
 }
 
-/* Botones */
+
 button {
   width: calc(100% - 20px);
   padding: 10px;

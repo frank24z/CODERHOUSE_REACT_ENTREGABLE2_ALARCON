@@ -30,7 +30,7 @@ function App() {
   const handleLogout = () => {
     setUsuario("");
     setNombreHotel("");
-    sessionStorage.clear(); // Limpiar el sessionStorage al hacer logout
+    sessionStorage.clear();
   };
 
   return (

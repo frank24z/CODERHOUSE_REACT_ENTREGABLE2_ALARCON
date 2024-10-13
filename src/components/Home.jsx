@@ -8,7 +8,6 @@ import suciaLibre from "../assets/sucia+libre.webp";
 import suciaOcupada from "../assets/sucia+ocupada.webp";
 import "../index.css";
 
-// Función para obtener la imagen según el estado de la habitación
 const obtenerImagenEstado = (estado) => {
   switch (estado) {
     case "Limpia + Libre":
@@ -24,7 +23,6 @@ const obtenerImagenEstado = (estado) => {
   }
 };
 
-// Componente para mostrar un huésped
 const HuespedCard = ({ huesped }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "HUESPED",
@@ -44,7 +42,7 @@ const HuespedCard = ({ huesped }) => {
   );
 };
 
-// Componente para mostrar una habitación con funcionalidad de arrastrar y soltar
+
 const HabitacionCard = ({ habitacion, index, onDropHuesped, setHabitaciones }) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "HUESPED",
@@ -89,7 +87,7 @@ const HabitacionCard = ({ habitacion, index, onDropHuesped, setHabitaciones }) =
   );
 };
 
-// Componente principal del Home
+
 function Home({ usuario, nombreHotel, onLogout, vista = "todo", setVista }) {
   const [habitaciones, setHabitaciones] = useState(() => JSON.parse(localStorage.getItem("habitaciones")) || []);
   const [huespedes, setHuespedes] = useState(() => JSON.parse(localStorage.getItem("huespedes")) || []);
