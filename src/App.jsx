@@ -1,41 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend'; // Backend para HTML5 drag and drop
-import Login from './components/Login';
-import CrearHotel from './components/CrearHotel';
-import Home from './components/Home';
-import Navbar from './components/Navbar';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import Login from "./components/Login";
+import CrearHotel from "./components/CrearHotel";
+import Home from "./components/Home";
+import Navbar from "./components/Navbar";
 
 function App() {
-  const [usuario, setUsuario] = useState(() => sessionStorage.getItem('usuario') || '');
-  const [nombreHotel, setNombreHotel] = useState(() => sessionStorage.getItem('nombreHotel') || '');
+  const [usuario, setUsuario] = useState(() => sessionStorage.getItem("usuario") || "");
+  const [nombreHotel, setNombreHotel] = useState(() => sessionStorage.getItem("nombreHotel") || "");
+  const [vista, setVista] = useState("todo");
 
-  // Guardar en sessionStorage cuando cambian usuario y nombreHotel
   useEffect(() => {
-    if (usuario) sessionStorage.setItem('usuario', usuario);
-    if (nombreHotel) sessionStorage.setItem('nombreHotel', nombreHotel);
+    if (usuario) sessionStorage.setItem("usuario", usuario);
+    if (nombreHotel) sessionStorage.setItem("nombreHotel", nombreHotel);
   }, [usuario, nombreHotel]);
 
   const manejarLogin = (nombre) => {
     setUsuario(nombre);
-    sessionStorage.setItem('usuario', nombre);
+    sessionStorage.setItem("usuario", nombre);
   };
 
   const manejarCrearHotel = (hotel) => {
     setNombreHotel(hotel);
-    sessionStorage.setItem('nombreHotel', hotel);
+    sessionStorage.setItem("nombreHotel", hotel);
   };
 
   const handleLogout = () => {
-    setUsuario('');
-    setNombreHotel('');
+    setUsuario("");
+    setNombreHotel("");
+    sessionStorage.clear(); // Limpiar el sessionStorage al hacer logout
   };
 
   return (
     <DndProvider backend={HTML5Backend}>
       <Router>
-        {usuario && <Navbar usuario={usuario} nombreHotel={nombreHotel} onLogout={handleLogout} />}
+        {usuario && nombreHotel && (
+          <Navbar
+            usuario={usuario}
+            nombreHotel={nombreHotel}
+            onLogout={handleLogout}
+            setVista={setVista}
+          />
+        )}
         <Routes>
           <Route
             path="/login"
@@ -43,7 +51,7 @@ function App() {
               usuario ? (
                 <Navigate to={nombreHotel ? "/home" : "/crear-hotel"} replace />
               ) : (
-                <Login onLogin={manejarLogin} usuarioGuardado={usuario} />
+                <Login onLogin={manejarLogin} />
               )
             }
           />
@@ -61,7 +69,13 @@ function App() {
             path="/home"
             element={
               usuario && nombreHotel ? (
-                <Home usuario={usuario} nombreHotel={nombreHotel} />
+                <Home
+                  usuario={usuario}
+                  nombreHotel={nombreHotel}
+                  onLogout={handleLogout}
+                  vista={vista}
+                  setVista={setVista}
+                />
               ) : (
                 <Navigate to={usuario ? "/crear-hotel" : "/login"} replace />
               )

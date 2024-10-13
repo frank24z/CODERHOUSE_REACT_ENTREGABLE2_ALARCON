@@ -6,9 +6,9 @@ import limpiaLibre from "../assets/limpia+libre.webp";
 import limpiaOcupada from "../assets/limpia+ocupada.webp";
 import suciaLibre from "../assets/sucia+libre.webp";
 import suciaOcupada from "../assets/sucia+ocupada.webp";
-import "../index.css"; 
+import "../index.css";
 
-// Función que retorna la imagen según el estado
+// Función para obtener la imagen según el estado de la habitación
 const obtenerImagenEstado = (estado) => {
   switch (estado) {
     case "Limpia + Libre":
@@ -24,7 +24,7 @@ const obtenerImagenEstado = (estado) => {
   }
 };
 
-// Componente de Huésped para arrastrar
+// Componente para mostrar un huésped
 const HuespedCard = ({ huesped }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "HUESPED",
@@ -35,11 +35,7 @@ const HuespedCard = ({ huesped }) => {
   }));
 
   return (
-    <div
-      ref={drag}
-      className="huesped-card"
-      style={{ opacity: isDragging ? 0.5 : 1 }}
-    >
+    <div ref={drag} className="huesped-card" style={{ opacity: isDragging ? 0.5 : 1 }}>
       <strong>{huesped.nombre}</strong>
       <p>Check-In: {huesped.checkIn}</p>
       <p>Check-Out: {huesped.checkOut}</p>
@@ -48,7 +44,7 @@ const HuespedCard = ({ huesped }) => {
   );
 };
 
-// Componente de Habitación con funcionalidad de Drop
+// Componente para mostrar una habitación con funcionalidad de arrastrar y soltar
 const HabitacionCard = ({ habitacion, index, onDropHuesped, setHabitaciones }) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "HUESPED",
@@ -59,11 +55,7 @@ const HabitacionCard = ({ habitacion, index, onDropHuesped, setHabitaciones }) =
   }));
 
   return (
-    <div
-      ref={drop}
-      className="habitacion-card"
-      style={{ borderColor: isOver ? "green" : "transparent" }}
-    >
+    <div ref={drop} className="habitacion-card" style={{ borderColor: isOver ? "green" : "transparent" }}>
       <img
         src={obtenerImagenEstado(habitacion.estado)}
         alt={`Estado ${habitacion.estado}`}
@@ -76,16 +68,13 @@ const HabitacionCard = ({ habitacion, index, onDropHuesped, setHabitaciones }) =
         {habitacion.huesped && (
           <div className="huesped-en-habitacion">
             <p>Huésped: {habitacion.huesped.nombre}</p>
-            <button onClick={() => onDropHuesped(null, index)}>Check-out</button>
           </div>
         )}
         <select
           value={habitacion.estado}
           onChange={(e) =>
             setHabitaciones((prev) =>
-              prev.map((h, i) =>
-                i === index ? { ...h, estado: e.target.value } : h
-              )
+              prev.map((h, i) => (i === index ? { ...h, estado: e.target.value } : h))
             )
           }
         >
@@ -94,19 +83,16 @@ const HabitacionCard = ({ habitacion, index, onDropHuesped, setHabitaciones }) =
           <option value="Sucia + Libre">Sucia + Libre</option>
           <option value="Sucia + Ocupada">Sucia + Ocupada</option>
         </select>
+        <button onClick={() => onDropHuesped(null, index)}>Check-out</button>
       </div>
     </div>
   );
 };
 
-function Home({ usuario, nombreHotel, onLogout }) {
-  const [habitaciones, setHabitaciones] = useState(() =>
-    JSON.parse(localStorage.getItem("habitaciones")) || []
-  );
-  const [huespedes, setHuespedes] = useState(() =>
-    JSON.parse(localStorage.getItem("huespedes")) || []
-  );
-
+// Componente principal del Home
+function Home({ usuario, nombreHotel, onLogout, vista = "todo", setVista }) {
+  const [habitaciones, setHabitaciones] = useState(() => JSON.parse(localStorage.getItem("habitaciones")) || []);
+  const [huespedes, setHuespedes] = useState(() => JSON.parse(localStorage.getItem("huespedes")) || []);
   const [numero, setNumero] = useState("");
   const [tipo, setTipo] = useState("Single");
   const [nombre, setNombre] = useState("");
@@ -157,8 +143,6 @@ function Home({ usuario, nombreHotel, onLogout }) {
         )
       );
     } else {
-      const huespedDevuelto = habitaciones[habitacionIndex].huesped;
-      setHuespedes((prev) => [...prev, huespedDevuelto]);
       setHabitaciones((prev) =>
         prev.map((h, i) =>
           i === habitacionIndex ? { ...h, estado: "Sucia + Libre", huesped: null } : h
@@ -169,41 +153,75 @@ function Home({ usuario, nombreHotel, onLogout }) {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <Navbar usuario={usuario} nombreHotel={nombreHotel} onLogout={onLogout} />
+      <Navbar usuario={usuario} nombreHotel={nombreHotel} onLogout={onLogout} setVista={setVista} />
       <div className="home-container">
-        <div className="sidebar-container">
-          <form onSubmit={crearHabitacion}>
-            <h2>Crear Habitación</h2>
-            <input type="number" value={numero} onChange={(e) => setNumero(e.target.value)} required />
-            <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
-              <option value="Single">Single</option>
-              <option value="Doble">Doble</option>
-              <option value="Suite">Suite</option>
-            </select>
-            <button type="submit">Agregar</button>
-          </form>
+        {vista === "todo" && (
+          <div className="sidebar-container">
+            <form onSubmit={crearHabitacion}>
+              <h2>Crear Habitación</h2>
+              <input
+                type="number"
+                placeholder="Número"
+                value={numero}
+                onChange={(e) => setNumero(e.target.value)}
+                required
+              />
+              <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
+                <option value="Single">Single</option>
+                <option value="Doble">Doble</option>
+                <option value="Suite">Suite</option>
+              </select>
+              <button type="submit">Agregar</button>
+            </form>
 
-          <form onSubmit={crearHuesped}>
-            <h2>Crear Huésped</h2>
-            <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
-            <input type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} required />
-            <input type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} required />
-            <input type="number" value={acompanantes} onChange={(e) => setAcompanantes(Number(e.target.value))} min="0" max="10" required />
-            <button type="submit">Agregar</button>
-          </form>
-        </div>
+            <form onSubmit={crearHuesped}>
+              <h2>Crear Huésped</h2>
+              <input
+                type="text"
+                placeholder="Nombre del huésped"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+                required
+              />
+              <input type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} required />
+              <input type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} required />
+              <input
+                type="number"
+                placeholder="Acompañantes"
+                value={acompanantes}
+                onChange={(e) => setAcompanantes(Number(e.target.value))}
+                min="0"
+                max="10"
+                required
+              />
+              <button type="submit">Agregar</button>
+            </form>
+          </div>
+        )}
 
-        <div className="habitaciones-container">
-          <h2>Habitaciones</h2>
-          {habitaciones.map((habitacion, index) => (
-            <HabitacionCard key={index} habitacion={habitacion} index={index} onDropHuesped={onDropHuesped} setHabitaciones={setHabitaciones} />
-          ))}
-        </div>
+        {(vista === "todo" || vista === "habitaciones") && (
+          <div className="habitaciones-container">
+            <h2>Habitaciones</h2>
+            {habitaciones.map((habitacion, index) => (
+              <HabitacionCard
+                key={index}
+                habitacion={habitacion}
+                index={index}
+                onDropHuesped={onDropHuesped}
+                setHabitaciones={setHabitaciones}
+              />
+            ))}
+          </div>
+        )}
 
-        <div className="huespedes-container">
-          <h2>Huéspedes</h2>
-          {huespedes.map((huesped, index) => <HuespedCard key={index} huesped={huesped} />)}
-        </div>
+        {(vista === "todo" || vista === "huespedes") && (
+          <div className="huespedes-container">
+            <h2>Huéspedes</h2>
+            {huespedes.map((huesped, index) => (
+              <HuespedCard key={index} huesped={huesped} />
+            ))}
+          </div>
+        )}
       </div>
     </DndProvider>
   );
