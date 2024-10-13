@@ -1,4 +1,4 @@
-/* Estilos generales */
+/* Estilo general del body */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -6,9 +6,9 @@ body {
   background-color: #f0f0f0;
 }
 
-/* Contenedor de login y creación de hotel */
-.login-container, .crearhotel-container {
-  width: 300px;
+/* Contenedor para las tarjetas de Login y Crear Hotel */
+.card-container {
+  width: 400px;
   margin: 100px auto;
   padding: 20px;
   background-color: white;
@@ -17,8 +17,8 @@ body {
   text-align: center;
 }
 
-/* Input y botones */
-input {
+/* Inputs y Select */
+input, select {
   width: calc(100% - 20px);
   padding: 10px;
   margin: 10px 0;
@@ -26,6 +26,7 @@ input {
   border-radius: 4px;
 }
 
+/* Botones */
 button {
   width: calc(100% - 20px);
   padding: 10px;
@@ -34,116 +35,100 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
   background-color: #45a049;
 }
 
-/* Barra de navegación */
+/* Mensajes de error */
+.error-message {
+  color: red;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+
+/* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
-  background-color: #333;
-  padding: 10px;
+  align-items: center;
+  background-color: #262626;
+  padding: 10px 30px;
   color: white;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
 }
 
-.navbar-item {
-  margin: 0 10px;
-}
-
-.navbar-right {
+/* Logo del hotel e imagen */
+.navbar-logo {
   display: flex;
   align-items: center;
 }
 
+.navbar-logo-img {
+  width: auto;
+  height: 60px;
+  margin-left: 10px;
+  border-radius: 50%;
+}
+
+/* Navbar derecha (usuario y botón) */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .logout-btn {
-  background-color: #e74c3c;
+  background-color: #ff4d4d;
   border: none;
   color: white;
   padding: 8px 12px;
-  cursor: pointer;
   border-radius: 4px;
-  margin-left: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .logout-btn:hover {
-  background-color: #c0392b;
+  background-color: #ff1a1a;
 }
 
-/* Contenido principal */
-.content {
-  text-align: center;
-  margin-top: 50px;
-}
-
-/* Estilos adicionales para habitaciones y huéspedes */
-.hotel-container {
+/* Contenedor del Home */
+.home-container {
   display: flex;
   justify-content: space-between;
   padding: 20px;
+  margin-top: 60px; /* Para evitar que el contenido quede debajo del navbar */
+  height: calc(100vh - 60px);
 }
 
-/* Sidebar para crear habitaciones y huéspedes */
+/* Sidebar */
 .sidebar-container {
-  width: 300px;
+  width: 30%;
   background-color: white;
   padding: 20px;
-  border-radius: 10px;
+  border-radius:10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
 }
 
-/* Formulario de inputs dentro del sidebar */
-input, select, button {
-  width: calc(100% - 20px);
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-}
-
-button:hover {
-  background-color: #45a049;
-}
-
-/* Mostrar huéspedes creados debajo del formulario en el sidebar */
-.huesped-card {
-  background-color: #f9f9f9;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 10px;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.huesped-card:hover {
-  background-color: #e0e0e0;
-}
-
-/* Tarjetas de habitaciones a lo largo de la pantalla */
+/* Contenedor de Habitaciones y huespedes */
 .habitaciones-container {
-  width: 70%; /* Ajuste del ancho para que ocupe más espacio */
+  width: 65%;
+  margin-left: 20px;
 }
 
-.habitacion-card {
+/* Tarjetas de habitaciones y huéspedes */
+.habitacion-card, .huesped-card {
   background-color: #f9f9f9;
   padding: 15px;
   margin: 10px 0;
   border-radius: 10px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-  width: 100%; /* A lo largo de la pantalla */
-}
-
-/* Estilo de error en los campos de input */
-.error-message {
-  color: red;
-  font-size: 12px;
-  margin: 5px 0;
 }

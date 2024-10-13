@@ -6,25 +6,24 @@ function CrearHotel({ onCrearHotel }) {
 
   const manejarCrearHotel = () => {
     if (!nombreHotel) {
-      setError('¡Debe completar el nombre del hotel!');
+      setError('Debe ingresar el nombre del hotel.');
       return;
     }
     setError('');
-    onCrearHotel(nombreHotel);
+    onCrearHotel(nombreHotel); // Pasamos el nombre del hotel al padre (App)
   };
 
   return (
-    <div className="crearhotel-container">
-      <h2>Crear hotel</h2>
+    <div className="card-container">
+      <h2>Crear Hotel</h2>
       <input
         type="text"
-        placeholder="Ingrese el nombre del hotel"
+        placeholder="Nombre del Hotel"
         value={nombreHotel}
         onChange={(e) => setNombreHotel(e.target.value)}
-        className={error ? 'input-error' : ''}
       />
-      {error && <p className="error-message">{error}</p>}
-      <button className="HotelBoton1" onClick={manejarCrearHotel}>Crear Hotel</button>
+      {error && <div className="error-message">{error}</div>}
+      <button onClick={manejarCrearHotel}>Crear</button>
     </div>
   );
 }
