@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend'; // Backend para HTML5 drag and drop
 import Login from './components/Login';
 import CrearHotel from './components/CrearHotel';
 import Home from './components/Home';
@@ -31,42 +33,44 @@ function App() {
   };
 
   return (
-    <Router>
-      {usuario && <Navbar usuario={usuario} nombreHotel={nombreHotel} onLogout={handleLogout} />}
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            usuario ? (
-              <Navigate to={nombreHotel ? "/home" : "/crear-hotel"} replace />
-            ) : (
-              <Login onLogin={manejarLogin} usuarioGuardado={usuario} />
-            )
-          }
-        />
-        <Route
-          path="/crear-hotel"
-          element={
-            usuario && !nombreHotel ? (
-              <CrearHotel onCrearHotel={manejarCrearHotel} />
-            ) : (
-              <Navigate to={nombreHotel ? "/home" : "/login"} replace />
-            )
-          }
-        />
-        <Route
-          path="/home"
-          element={
-            usuario && nombreHotel ? (
-              <Home usuario={usuario} nombreHotel={nombreHotel} />
-            ) : (
-              <Navigate to={usuario ? "/crear-hotel" : "/login"} replace />
-            )
-          }
-        />
-        <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
-    </Router>
+    <DndProvider backend={HTML5Backend}>
+      <Router>
+        {usuario && <Navbar usuario={usuario} nombreHotel={nombreHotel} onLogout={handleLogout} />}
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              usuario ? (
+                <Navigate to={nombreHotel ? "/home" : "/crear-hotel"} replace />
+              ) : (
+                <Login onLogin={manejarLogin} usuarioGuardado={usuario} />
+              )
+            }
+          />
+          <Route
+            path="/crear-hotel"
+            element={
+              usuario && !nombreHotel ? (
+                <CrearHotel onCrearHotel={manejarCrearHotel} />
+              ) : (
+                <Navigate to={nombreHotel ? "/home" : "/login"} replace />
+              )
+            }
+          />
+          <Route
+            path="/home"
+            element={
+              usuario && nombreHotel ? (
+                <Home usuario={usuario} nombreHotel={nombreHotel} />
+              ) : (
+                <Navigate to={usuario ? "/crear-hotel" : "/login"} replace />
+              )
+            }
+          />
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </Router>
+    </DndProvider>
   );
 }
 

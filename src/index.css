@@ -17,39 +17,6 @@ body {
   text-align: center;
 }
 
-/* Inputs y Select */
-input, select {
-  width: calc(100% - 20px);
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-/* Botones */
-button {
-  width: calc(100% - 20px);
-  padding: 10px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #45a049;
-}
-
-/* Mensajes de error */
-.error-message {
-  color: red;
-  margin-top: -10px;
-  margin-bottom: 10px;
-}
-
-
 /* Navbar */
 .navbar {
   display: flex;
@@ -65,20 +32,17 @@ button:hover {
   z-index: 100;
 }
 
-/* Logo del hotel e imagen */
 .navbar-logo {
   display: flex;
   align-items: center;
 }
 
 .navbar-logo-img {
-  width: auto;
   height: 60px;
   margin-left: 10px;
   border-radius: 50%;
 }
 
-/* Navbar derecha (usuario y botón) */
 .navbar-right {
   display: flex;
   align-items: center;
@@ -103,9 +67,11 @@ button:hover {
 .home-container {
   display: flex;
   justify-content: space-between;
+  gap: 20px;
   padding: 20px;
-  margin-top: 60px; /* Para evitar que el contenido quede debajo del navbar */
-  height: calc(100vh - 60px);
+  margin-top: 80px;
+  height: calc(100vh - 80px);
+  box-sizing: border-box;
 }
 
 /* Sidebar */
@@ -113,15 +79,29 @@ button:hover {
   width: 30%;
   background-color: white;
   padding: 20px;
-  border-radius:10px;
+  border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
 }
 
-/* Contenedor de Habitaciones y huespedes */
+/* Contenedor de Habitaciones */
 .habitaciones-container {
   width: 65%;
   margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+/* Contenedor de Huéspedes */
+.huespedes-container {
+  width: 30%;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
 }
 
 /* Tarjetas de habitaciones y huéspedes */
@@ -131,4 +111,72 @@ button:hover {
   margin: 10px 0;
   border-radius: 10px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Tarjeta de Habitación */
+.habitacion-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  padding: 15px;
+}
+
+/* Imagen de estado dentro de la tarjeta */
+.estado-imagen {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 8px;
+}
+
+/* Información de la habitación */
+.info-habitacion {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Formulario Inputs y Selects */
+input, select {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Botones */
+button {
+  width: calc(100% - 20px);
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+
+.dragging {
+  opacity: 0.5;
+}
+
+.checkout-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.checkout-btn:hover {
+  background-color: #0056b3;
 }
